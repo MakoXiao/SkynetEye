@@ -14,6 +14,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+#You also need to add 'django.core.context_processors.request' to #TEMPLATE_CONTEXT_PROCESSORS setting in
+# #your Django project settings.py file.:
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -61,7 +65,7 @@ ROOT_URLCONF = 'SkynetEye.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["%s/%s" %(BASE_DIR,'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,7 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.core.context_processors.request'
+                'django.core.context_processors.request', #for django-suit
             ],
         },
     },
@@ -130,13 +134,15 @@ SHELLINABOX = {
     'password': 'admin'
 }
 
+
 #for django admin customaztion
 
-
 # Django Suit configuration example
+# http://django-suit.readthedocs.org/en/develop/
+
 SUIT_CONFIG = {
     # header
-    'ADMIN_NAME': 'SkynetEye管理后台',
+    'ADMIN_NAME': 'SkynetEye Manager',
     # 'HEADER_DATE_FORMAT': 'l, j. F Y',
     # 'HEADER_TIME_FORMAT': 'H:i',
 
@@ -160,5 +166,5 @@ SUIT_CONFIG = {
     # ),
 
     # misc
-    # 'LIST_PER_PAGE': 15
+    'LIST_PER_PAGE': 20
 }
