@@ -121,10 +121,14 @@ whoami@ubuntu:~/py/SkynetEye$ python manage.py runserver 0.0.0.0:8001
 
 # pip install joe
    -  A .gitignore magician in your command line. Joe generates .gitignore files from the command line for you.
+   - https://github.com/karan/joe
 
 ```
-https://github.com/karan/joe
+# git tracking  file delete
+whoami@ubuntu:~/py/SkynetEye$ git rm -r --cached .idea
+whoami@ubuntu:~/py/SkynetEye$ git rm -r --cached *.pyc
 
+# use joe 
 whoami@ubuntu:~/py/SkynetEye$ sudo pip install joe
 whoami@ubuntu:~/py/SkynetEye$ joe
 
@@ -228,6 +232,9 @@ docs/_build/
 # PyBuilder
 target/
 
+# Idea
+.idea
+
 #####=== OSX ===#####
 .DS_Store
 .AppleDouble
@@ -249,5 +256,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
 
 ```
