@@ -257,5 +257,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-
+whoami@ubuntu:~/py/SkynetEye$ git add .
+whoami@ubuntu:~/py/SkynetEye$ git commit -m "update joe .gitignore"
+whoami@ubuntu:~/py/SkynetEye$ git push origin master
 ```
