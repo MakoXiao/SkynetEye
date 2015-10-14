@@ -119,3 +119,135 @@ whoami@ubuntu:~/py/SkynetEye$ python manage.py runserver 0.0.0.0:8001
 ## FireFox visit
   FireFox Address : http://localhost:8000/admin 
 
+# pip install joe
+   -  A .gitignore magician in your command line. Joe generates .gitignore files from the command line for you.
+
+```
+https://github.com/karan/joe
+
+whoami@ubuntu:~/py/SkynetEye$ sudo pip install joe
+whoami@ubuntu:~/py/SkynetEye$ joe
+
+     _
+    (_)   _      __
+    | | /'_`\  /'__`\
+    | |( (_) )(  ___/
+ _  | |`\___/'`\____)
+( )_| |
+`\___/'
+
+
+joe generates .gitignore files from the command line for you
+
+Usage:
+  joe (ls | list)
+  joe [NAME...]
+  joe (-h | --help)
+  joe --version
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.
+
+whoami@ubuntu:~/py/SkynetEye$ joe ls
+actionscript, ada, agda, android, anjuta, appceleratortitanium, archlinuxpackages, archives, autotools, bricxcc, c, c++, cfwheels, cmake, cvs, cakephp, chefcookbook, clojure, cloud9, codeigniter, codekit, commonlisp, composer, concrete5, coq, craftcms, dm, dart, darteditor, delphi, dreamweaver, drupal, episerver, eagle, eclipse, eiffelstudio, elisp, elixir, emacs, ensime, erlang, espresso, expressionengine, extjs, fancy, finale, flexbuilder, forcedotcom, fortran, fuelphp, gwt, gcov, gitbook, go, gradle, grails, haskell, igorpro, ipythonnotebook, idris, jdeveloper, java, jboss, jekyll, jetbrains, joomla, jython, kdevelop4, kate, kohana, labview, laravel, lazarus, leiningen, lemonstand, libreoffice, lilypond, linux, lithium, lua, lyx, magento, matlab, maven, mercurial, mercury, metaprogrammingsystem, meteor, microsoftoffice, modelsim, momentics, monodevelop, nanoc, netbeans, nim, ninja, node, notepadpp, ocaml, osx, objective-c, opa, opencart, oracleforms, packer, perl, phalcon, playframework, plone, prestashop, processing, python, qooxdoo, qt, r, ros, rails, redcar, redis, rhodesrhomobile, ruby, rust, sbt, scons, svn, sass, scala, scrivener, sdcc, seamgen, sketchup, slickedit, stella, sublimetext, sugarcrm, swift, symfony, symphonycms, tags, tex, textmate, textpattern, tortoisegit, turbogears2, typo3, umbraco, unity, vvvv, vagrant, vim, virtualenv, visualstudio, waf, webmethods, windows, wordpress, xcode, xilinxise, xojo, yeoman, yii, zendframework, zephir
+
+whoami@ubuntu:~/py/SkynetEye$ joe java python osx > .gitignore
+whoami@ubuntu:~/py/SkynetEye$ cat .gitignore 
+#### joe made this: http://goel.io/joe
+
+#####=== Java ===#####
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+#####=== Python ===#####
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+#####=== OSX ===#####
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+```
