@@ -5,15 +5,15 @@ from django.contrib.auth.models import User
 import datetime
 
 # Create your models here.
-class DIC(models.Model):
+class IDC(models.Model):
     name = models.CharField(max_length=64,unique=True)
 
     def __unicode__(self):
         return self.name
 
     class Meta:
-        verbose_name = u'DIC'
-        verbose_name_plural = u'DIC'
+        verbose_name = u'IDC'
+        verbose_name_plural = u'IDC'
 
 class Department(models.Model):
     name =  models.CharField(max_length=64,unique=True)
@@ -31,7 +31,7 @@ class Hosts(models.Model):
         ('windows','Windows'),
         ('Linux','Linux/Unix')
     )
-    idc = models.ForeignKey('DIC')
+    idc = models.ForeignKey('IDC')
     system_type = models.CharField(choices=system_type_choices,max_length=32,default='linux')
     port = models.IntegerField(default=22)
     enabled = models.BooleanField(default=True,help_text=u'主机若不想被用户访问可以去掉此选项')

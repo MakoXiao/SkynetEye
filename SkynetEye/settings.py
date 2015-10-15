@@ -168,3 +168,5 @@ SUIT_CONFIG = {
     # misc
     'LIST_PER_PAGE': 20
 }
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
