@@ -65,7 +65,10 @@ ROOT_URLCONF = 'SkynetEye.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["%s/%s" %(BASE_DIR,'templates'),],
+        'DIRS': [
+            "%s/%s" %(BASE_DIR,'templates'),
+            "%s/%s" %(BASE_DIR,'templates/pages'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,9 +116,14 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# https://docs.djangoproject.com/en/1.8/howto/statics-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    "%s/%s" %(BASE_DIR, "static"),
+)
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 Welcome_msg = '''
 |-------\033[32;1m[Welcome login SkynetEye Auditing System]\033[0m-----|
@@ -168,5 +176,3 @@ SUIT_CONFIG = {
     # misc
     'LIST_PER_PAGE': 20
 }
-
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -5,10 +5,8 @@ from django.http import HttpResponse,Http404
 import datetime
 
 def index(request):
-	return HttpResponse("Hello,this SkynetEye wolcome..!")
+
+		return render_to_response("index.html")
 
 def test(request):
-
-		h = "hello world!"
-
-		return render_to_response("time.html",{"git_data":h})
+	return HttpResponse("Hello,this SkynetEye wolcome..!")

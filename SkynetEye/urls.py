@@ -20,6 +20,7 @@ from web.views import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'session_security/', include('session_security.urls')),
-    url(r'^index/', index),
+    url(r'^$', index),  #default open page
+    #url(r'^index/$', index),
     url(r'^test/', test),
 ]
