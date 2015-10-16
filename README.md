@@ -267,3 +267,8 @@ whoami@ubuntu:~/py/SkynetEye$ git push origin master
 whoami@ubuntu:~$ sudo pip install psutil
 
 ```
+
+# ionicons css
+```
+  http://ionicons.com/
+```
