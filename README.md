@@ -2,6 +2,7 @@
 
 SkynetEye 天网监控中心
 ---
+![](http://www.itweet.cn/screenshots/skyneteye.jpg)
 
 # pycharm download
 https://download.jetbrains.com/python/pycharm-community-4.5.4.tar.gz
