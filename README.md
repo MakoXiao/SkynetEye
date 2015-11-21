@@ -22,10 +22,10 @@ PATH=.:$JAVA_HOME/bin:$PATH
 https://github.com/itweet/SkynetEye.git
 ```
 whoami@ubuntu:~$ git config --global user.name "SkynetEye"
-whoami@ubuntu:~$ git config --global user.email "whoami@qq.com"
+whoami@ubuntu:~$ git config --global user.email "whoami@gmail.com"
 whoami@ubuntu:~$ cd ~/.ssh
 whoami@ubuntu:~$ rm -rf  ~/.ssh/*
-whoami@ubuntu:~$ ssh-keygen -t rsa -C "whoami@qq.com"
+whoami@ubuntu:~$ ssh-keygen -t rsa -C "whoami@gmail.com"
 ```
 
 # git SkynetEye
@@ -35,6 +35,7 @@ git clone https://github.com/itweet/SkynetEye.git
 
 # python+django
 ```
+whoami@ubuntu:~$ sudo apt-get install python-dev
 whoami@ubuntu:~$ sudo apt-get install python-pip
 whoami@ubuntu:~$ sudo pip install Django==1.8.4
 whoami@ubuntu:~$ sudo pip install django-suit==0.2.15
@@ -44,7 +45,7 @@ whoami@ubuntu:~$ sudo pip install django-debugtools
 
 ## install python-mysql model
 whoami@ubuntu:~$ sudo apt-get install python-mysqldb  #for ubuntu
-yum install MySQL-python  #for CentOS
+whoami@ubuntu:~$ sudo yum install MySQL-python  #for CentOS
 ```
 
 # install mysql
@@ -106,7 +107,7 @@ whoami@ubuntu:/apps/pycharm$ sh bin/pycharm.sh
 ├── Run-->Debug Configurations-->Add New Configuration-->Python
     └── Name : debug-runserver
      └──Script: /home/whoami/py/SkynetEye/manage.py
-     └──Script: runserver 0.0.0.0:8000
+     └──Script: runserver 0.0.0.0:8001
      └──Python interpreter: Python 2.7.6(/usr/bin/python2.7) 
 
 ├──Run-->Debug-->debug-runserver
