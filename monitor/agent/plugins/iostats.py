@@ -13,56 +13,26 @@ __author__ = 'whoami'
 @time: 2015-11-28 下午1:53
 """
 import time
+import psutil
 
 def monitor(frist_invoke=2):
     """
     Return (inbytes, outbytes, in_num, out_num, ioms) of disk.
     """
-    f1 = open('/proc/diskstats')
-    f2 = open('/proc/diskstats')
-    content1 = f1.read()
+    disks_before = psutil.disk_io_counters()
+
+    # sleep some time
     time.sleep(frist_invoke)
-    content2 = f2.read()
-    f1.close()
-    f2.close()
-    ds1 = {}
-    for l in content1.splitlines():
-        d = l.strip().split()
-        if d[2].startswith('loop') or d[2].startswith('ram') or \
-           d[2].startswith('dm-') or \
-           d[2].startswith('fd') or d[2].startswith('sr'):
-           continue
-        ds1[d[2]] = [d[3], d[7], d[4], d[8], d[12]]
-    ds2 = {}
-    for l in content2.splitlines():
-        d = l.strip().split()
-        if d[2].startswith('loop') or d[2].startswith('ram') or \
-           d[2].startswith('fd') or d[2].startswith('sr'):
-           continue
-        ds2[d[2]] = [d[3], d[7], d[4], d[8], d[12]]
-    ds = {}
-    for d in ds1.keys():
-        rnum = float(int(ds2[d][0]) - int(ds1[d][0])) / frist_invoke
-        wnum = float(int(ds2[d][1]) - int(ds1[d][1])) / frist_invoke
-        blm_read = float(int(ds2[d][2]) - int(ds1[d][2])) / frist_invoke / 1024
-        blm_wrtn = float(int(ds2[d][3]) - int(ds1[d][3])) / frist_invoke / 1024
-        util = 100 * (float(int(ds2[d][4]) - int(ds1[d][4]))/(frist_invoke * 1000))
 
-        ds[d] = [blm_read, blm_wrtn, rnum, wnum, util]
+    disks_after = psutil.disk_io_counters()
 
-    for i in ds.keys():
-        blm_read += round(ds.get(i)[0],2)
-        blm_wrtn += round(ds.get(i)[1],2)
-        rnum += round(ds.get(i)[2],2)
-        wnum += round(ds.get(i)[3],2)
-        util += round(ds.get(i)[4],2)
+    disks_read_per_sec = disks_after.read_bytes - disks_before.read_bytes
+    disks_write_per_sec = disks_after.write_bytes - disks_before.write_bytes
+
 
     value_dic = {
-        'io.mb_read':blm_read,
-        'io.mb_wrtn':blm_wrtn,
-        'io.mb_read_num': rnum,
-        'io.mb_wrtn_num': wnum,
-        'io.ioms': util
+        'io.disks_read': disks_read_per_sec/frist_invoke/(1024*1024),
+        'io.disks_write': disks_write_per_sec/frist_invoke/(1024*1024),
     }
 
     return value_dic

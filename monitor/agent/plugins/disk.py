@@ -13,34 +13,31 @@ __author__ = 'whoami'
 @time: 2015-11-28 下午1:53
 """
 import os
+import psutil
 
 def monitor(frist_invoke=1):
     value_dic = {
         'mount':{}
     }
 
-    f = open('/etc/fstab')
-    lines = f.readlines()
-    f.close()
+    for part in psutil.disk_partitions(all=False):
+        if os.name == 'nt':
+            if 'cdrom' in part.opts or part.fstype == '':
+                # skip cd-rom drives with no disk in it; they may raise
+                # ENOENT, pop-up a Windows GUI error for a non-ready
+                # partition or just hang.
+                continue
+        mount_path = part.mountpoint
+        usage = psutil.disk_usage(part.mountpoint)
 
-    for line in lines:
-        if '#' not in line and 'ext' in line:
-            mount_dir = line.split()[1]
-            type = line.split()[2]
-
-            disk = os.statvfs(mount_dir)
-            capacity = float(disk.f_bsize * disk.f_blocks/(1024*1024))
-            used = capacity-float(disk.f_bsize * disk.f_bfree/(1024*1024))
-            available = float(disk.f_bsize * disk.f_bavail/(1024*1024))
-
-            value_dic['mount'][mount_dir] = {
-                'disk.device':mount_dir,
-                'disk.capacity':capacity,
-                'disk.used':used,
-                'disk.available':available,
-                'disk.percent': round((float(used/capacity)*100),2),
-                'disk.type':type,
-            }
+        value_dic['mount'][mount_path] = {
+            'disk.device':mount_path,
+            'disk.total':usage.total/(1024*1024),
+            'disk.used':usage.used/(1024*1024),
+            'disk.free':usage.free/(1024*1024),
+            'disk.percent': usage.percent,
+            'disk.type':part.fstype,
+        }
 
     return value_dic
 

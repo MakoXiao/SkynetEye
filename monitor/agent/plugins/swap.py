@@ -12,23 +12,17 @@ __author__ = 'whoami'
 @file: swap.py
 @time: 2015-12-03 下午3:16
 """
+import psutil
 
 def monitor(frist_invoke=1):
-    mem = {}
-    f = open("/proc/meminfo")
-    lines = f.readlines()
-    f.close()
-    for line in lines:
-        if len(line) < 2: continue
-        name = line.split(':')[0]
-        var = line.split(':')[1].split()[0]
-        mem[name] = long(var) / (1024.0)
+
+    swap = psutil.swap_memory()
 
     value_dic = {
-        'swap.total':mem['SwapTotal'],
-        'swap.cached':mem['SwapCached'],
-        'swap.free':mem['SwapFree'],
-        'swap.used':mem['SwapTotal']-mem['SwapFree'],
+        'swap.total': int(swap.total/(1024*1024)),
+        'swap.free': int(swap.free/(1024*1024)),
+        'swap.used': int(swap.used/(1024*1024)),
+        'swap.percent':swap.percent,
     }
 
     return value_dic
