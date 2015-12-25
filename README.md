@@ -274,3 +274,37 @@ whoami@ubuntu:~$ sudo pip install psutil
 ```
   http://ionicons.com/
 ```
+
+# python rpc && Performance
+```
+https://github.com/itweet/msgpack-rpc-python
+pip install msgpack-rpc-python
+
+# python bench_client.py 
+call: 5715.20683966 qps
+async: 5650.98495026 qps
+notify: 9617.55670771 qps
+```
+OS: ubuntu 14.2 vm<br />
+CPU: Intel Core i7 2.7 GHz<br />
+Memory: 4 GB 1600 MHz DDR3
+
+<table>
+  <tr>
+    <th></th><th>call(QPS)</th><th>async(QPS)</th><th>notify(QPS)</th>
+  </tr>
+  <tr>
+    <td>2.7.3</td><td>5715</td><td>5650</td><td>9617</td>
+  </tr>
+  <tr>
+    <td>3.3.0</td><td>5493</td><td>5812</td><td>23634</td>
+  </tr>
+  <tr>
+    <td>PyPy 1.9.0 with GCC 4.2.1</td><td>5519</td><td>9729</td><td>46406</td>
+  </tr>
+</table>
+
+
+
+
+
