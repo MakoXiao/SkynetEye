@@ -17,11 +17,19 @@ import threading
 from redishelper import RedisHelper
 import pickle
 import time
+import logging
 from plugins import plugin_api
 
 host_ip = '127.0.0.1'
 
 class MonitorClient(object):
+
+    logging.basicConfig(level=logging.DEBUG,
+          format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+          datefmt='%m-%d %H:%M',
+          filename='agent.log',
+          filemode='w')
+
     def __init__(self,server,port):
         self.server = server
         self.prot = port
@@ -39,8 +47,10 @@ class MonitorClient(object):
         return pickle.dumps(msg)
 
     def handle(self):
+        self.report_service_data = {}
+
         if self.get_configs():
-            #print '--going to monitor services--',self.configs
+            #print 'going to monitor services--',self.configs
             while True:
                 for service_name,val in self.configs['services'].items():
 
@@ -50,7 +60,6 @@ class MonitorClient(object):
                         #need to check off the next run
                         t = threading.Thread(target=self.task,args=[service_name,plugin_name])
                         t.start()
-                        print "current has %d threads" % (threading.activeCount() - 1)
 
                         #update last check time
                         self.configs['services'][service_name][2] = time.time()
@@ -60,11 +69,18 @@ class MonitorClient(object):
                         print '\033[32;1m %s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time)
 
                 time.sleep(5)
+
+                if self.report_service_data:
+
+                    print {'report_service_data': self.report_service_data.values()}
+
+                    msg = self.format_msg('report_service_data',self.report_service_data.values())
+                    self.report_service_data.clear()
         else:
             print '--could not found any configurations for this host....'
 
     def task(self,service_name,plugin_name):
-        print '--going to run service:',service_name,plugin_name
+        logging.info('going to run service: %s %s ' %(service_name,plugin_name))
         func = getattr(plugin_api,plugin_name)
         result = func()
 
@@ -74,7 +90,11 @@ class MonitorClient(object):
                                 'data':result
                                 })
 
-        self.redis.publish(msg)
+        self.report_service_data[service_name]={
+                                'ip':host_ip,
+                                'service_name':service_name,
+                                'data':result
+                                }
 
     def run(self):
         self.handle()
