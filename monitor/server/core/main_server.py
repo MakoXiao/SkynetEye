@@ -14,6 +14,7 @@ __author__ = 'whoami'
 """
 
 from redishelper import RedisHelper
+from rpcserver import RpcMain
 import serializer
 
 import action_process
@@ -25,6 +26,7 @@ class MonitorServer(object):
         self.port = port
         self.hosts = serializer.all_host_configs()
         self.redis = RedisHelper()
+        self.rpc = RpcMain()  # init starting rpc server
 
     def handle(self):
         redis_sub = self.redis.subscribe()
@@ -47,7 +49,8 @@ class MonitorServer(object):
         pass
 
 if __name__ == '__main__':
-    serializer.flush_all_host_configs_into_redis()
+    # serializer.flush_all_host_configs_into_redis()
+
     ms = MonitorServer('0.0.0.0','8888')
     ms.run()
 

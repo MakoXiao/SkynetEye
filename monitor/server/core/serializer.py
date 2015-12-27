@@ -28,7 +28,7 @@ def host_config_serializer(host_ip):
     }
     for group in hosts.monitored_groups:
         if host_ip in group.hosts:
-             #取得所有监控插件
+             #git all monitor plugins
             applied_services.extend(group.services)
     #去重插件,不同模板可能出现重复监控监控插件
     applied_services = set(applied_services)
@@ -54,6 +54,22 @@ def flush_all_host_configs_into_redis():
         redis.set(key,pickle.dumps(host_config))
     return True
 
+def init_all_host_configs_into_client():
+    applied_hosts = []
+    redis = RedisHelper()
+    for group in hosts.monitored_groups:
+        applied_hosts.extend(group.hosts)
+    applied_hosts = set(applied_hosts)
+
+    configs = {'configs':{}}
+    for host_ip in applied_hosts:
+        host_config = host_config_serializer(host_ip)
+        key = 'HostConfig::%s' %host_ip
+
+        configs['configs'][key] = pickle.dumps(host_config)
+
+    return configs
+
 def report_service_data(service_instance,msg):
     # print 'recv:',msg
     host_ip = msg['ip']
@@ -74,9 +90,9 @@ def all_host_configs():
     for group in hosts.monitored_groups:
         for host_ip in group.hosts:
             configs['hosts'][host_ip] = {}
-
     return configs
 
 if __name__ == '__main__':
-    #print host_config_serializer('192.168.2.125')
-    flush_all_host_configs_into_redis()
+    # print host_config_serializer('192.168.2.125')
+    #flush_all_host_configs_into_redis()
+    print init_all_host_configs_into_client()

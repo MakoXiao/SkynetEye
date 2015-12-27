@@ -14,30 +14,25 @@ __author__ = 'whoami'
 """
 
 import threading
-from redishelper import RedisHelper
+from msgpackclient import MsgpackClient
 import pickle
 import time
-import logging
 from plugins import plugin_api
+from log import skynetLog
 
 host_ip = '127.0.0.1'
 
 class MonitorClient(object):
 
-    logging.basicConfig(level=logging.DEBUG,
-          format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
-          datefmt='%m-%d %H:%M',
-          filename='agent.log',
-          filemode='w')
-
     def __init__(self,server,port):
         self.server = server
         self.prot = port
         self.configs = {}
-        self.redis = RedisHelper()
+        self.msgpack = MsgpackClient()
+        self.Log = skynetLog()
 
     def get_configs(self):
-        config = self.redis.get('HostConfig::%s' % host_ip)
+        config = self.msgpack.getConfig('HostConfig::%s' % host_ip)
         if config:
             self.configs = pickle.loads(config)
             return True
@@ -50,6 +45,7 @@ class MonitorClient(object):
         self.report_service_data = {}
 
         if self.get_configs():
+            a = time.time()
             #print 'going to monitor services--',self.configs
             while True:
                 for service_name,val in self.configs['services'].items():
@@ -66,29 +62,32 @@ class MonitorClient(object):
 
                     else:
                         next_run_time = interval-(time.time() - last_check_time)
-                        print '\033[32;1m %s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time)
+                        self.Log.info('\033[32;1m %s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time))
 
                 time.sleep(5)
-
                 if self.report_service_data:
 
-                    print {'report_service_data': self.report_service_data.values()}
+                    print {'report_service_data::%s' %time.strftime('%Y%m%d%H%M') : self.report_service_data.values()}
 
-                    msg = self.format_msg('report_service_data',self.report_service_data.values())
+                    msg = self.format_msg('report_service_data::%s' %time.strftime('%Y%m%d%H%M'),self.report_service_data.values())
+                    flag = self.msgpack.push(msg)
+
+                    if flag:
+                        self.Log.info('push data success ...')
                     self.report_service_data.clear()
         else:
-            print '--could not found any configurations for this host....'
+            self.Log.error('--could not found any configurations for this host....')
 
     def task(self,service_name,plugin_name):
-        logging.info('going to run service: %s %s ' %(service_name,plugin_name))
+        self.Log.info('going to run service: %s %s ' %(service_name,plugin_name))
         func = getattr(plugin_api,plugin_name)
         result = func()
 
-        msg = self.format_msg('report_service_data',
-                              {'ip':host_ip,
-                               'service_name':service_name,
-                                'data':result
-                                })
+        # msg = self.format_msg('report_service_data',
+        #                       {'ip':host_ip,
+        #                        'service_name':service_name,
+        #                         'data':result
+        #                         })
 
         self.report_service_data[service_name]={
                                 'ip':host_ip,

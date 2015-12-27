@@ -16,6 +16,10 @@ __author__ = 'whoami'
 import generic
 from data_process import avg,hit,last,capacity,size
 
+'''
+    python operator models (lt,le,eq,ne,ge,gt)
+'''
+
 class cpu(generic.BaseService):
     def __init__(self):
         super(cpu,self).__init__()
@@ -84,7 +88,7 @@ class load(generic.BaseService):
                     'operator':'gt',
                     'warning':0.85,
                     'critical':0.95,
-                    'data_type':'int'
+                    'data_type':'float'
                      },
         }
 
