@@ -18,6 +18,8 @@ import serializer
 
 def action_process(server_instance,msg):
 
+    print '>> process data:: %s' % pickle.loads(msg)
+
     msg = pickle.loads(msg[2])
     # print msg
 
@@ -25,4 +27,3 @@ def action_process(server_instance,msg):
     func = getattr(serializer,func_name)
 
     func(server_instance,msg[func_name])
-

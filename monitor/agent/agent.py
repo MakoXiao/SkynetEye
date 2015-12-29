@@ -18,7 +18,6 @@ from msgpackclient import MsgpackClient
 import pickle
 import time
 from plugins import plugin_api
-from log import skynetLog
 
 host_ip = '127.0.0.1'
 
@@ -29,7 +28,6 @@ class MonitorClient(object):
         self.prot = port
         self.configs = {}
         self.msgpack = MsgpackClient()
-        self.Log = skynetLog()
 
     def get_configs(self):
         config = self.msgpack.getConfig('HostConfig::%s' % host_ip)
@@ -62,24 +60,26 @@ class MonitorClient(object):
 
                     else:
                         next_run_time = interval-(time.time() - last_check_time)
-                        self.Log.info('\033[32;1m %s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time))
+                        print '\033[32;1m%s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time)
 
                 time.sleep(5)
                 if self.report_service_data:
 
-                    print {'report_service_data::%s' %time.strftime('%Y%m%d%H%M') : self.report_service_data.values()}
-
+                    # print {'report_service_data::%s' %time.strftime('%Y%m%d%H%M') : self.report_service_data.values()}
                     msg = self.format_msg('report_service_data::%s' %time.strftime('%Y%m%d%H%M'),self.report_service_data.values())
                     flag = self.msgpack.push(msg)
 
-                    if flag:
-                        self.Log.info('push data success ...')
-                    self.report_service_data.clear()
+                    try:
+                        if flag:
+                            print '\033[0;31;1m push>> push data success \033[0m'
+                            self.report_service_data.clear()
+                    except Exception,e:
+                        print '%s ==> %s' %('push data fail',e.message)
         else:
-            self.Log.error('--could not found any configurations for this host....')
+            print '--could not found any configurations for this host....'
 
     def task(self,service_name,plugin_name):
-        self.Log.info('going to run service: %s %s ' %(service_name,plugin_name))
+        print 'going to run service: %s %s ' %(service_name,plugin_name)
         func = getattr(plugin_api,plugin_name)
         result = func()
 

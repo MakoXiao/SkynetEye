@@ -24,33 +24,10 @@ class MonitorServer(object):
     def __init__(self,ip,port):
         self.ip = ip
         self.port = port
-        self.hosts = serializer.all_host_configs()
-        self.redis = RedisHelper()
-        self.rpc = RpcMain()  # init starting rpc server
-
-    def handle(self):
-        redis_sub = self.redis.subscribe()
-        while True:
-            msg = redis_sub.parse_response()
-            #print 'recv:',msg
-            action_process.action_process(self,msg)
-            print '---------waiting for new msg ---------'
-
-            #received data
-            for host,val in self.hosts['hosts'].items():
-                if len(val.keys()) >= 6:
-                    print host,val
-
-    def run(self):
-        print '-------starting monitor server---------'
-        self.handle()
-
-    def process(self):
-        pass
+        self.rpc = RpcMain(ip,port)  # init starting rpc server
 
 if __name__ == '__main__':
     # serializer.flush_all_host_configs_into_redis()
-
-    ms = MonitorServer('0.0.0.0','8888')
+    ms = MonitorServer('0.0.0.0',18800)
+    print '-------starting monitor server---------'
     ms.run()
-

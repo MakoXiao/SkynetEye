@@ -13,14 +13,15 @@ __author__ = 'whoami'
 @time: 2015-12-27 下午1:35
 """
 
-
 import msgpackrpc
-import pickle
 import serializer
+from skynet import skynet
+import pickle
 
 class RpcServer(object):
     def __init__(self):
         self.conf = serializer.init_all_host_configs_into_client()
+        self.sk = skynet()
         print '---init configs info---'
 
     def heartbeat(self,heartbeat):
@@ -31,14 +32,15 @@ class RpcServer(object):
             return v.get(host_ip)
 
     def push(self,msg):
-        print pickle.loads(msg)
+        self.sk.forward(msg)
 
     def jobs(self,task):
         pass
 
 class RpcMain(object):
-    def __init__(self):
+    def __init__(self,ip,port):
+
         server = msgpackrpc.Server(RpcServer())
-        server.listen(msgpackrpc.Address("localhost", 18800))
+        server.listen(msgpackrpc.Address(ip, port))
         print '-------starting rpc server listening port:18800---------'
         server.start()
