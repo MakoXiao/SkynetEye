@@ -75,14 +75,17 @@ def report_service_data(service_instance,msg):
     host_ip = msg['ip']
     service_status_data = msg['data']
     service_name = msg['service_name']
+    timestamp = msg['timestamp']
 
     service_instance.hosts['hosts'][host_ip][service_name] = {
         'data':service_status_data,
-        'time_stamp':time.time()
+        'timestamp':timestamp
     }
 
     key = 'StatusData::%s' % host_ip
-    service_instance.redis.set(key,pickle.dumps(service_instance.hosts['hosts'][host_ip]))
+
+    # waring data put redis 3 hour
+    # service_instance.redis.set(key,pickle.dumps(service_instance.hosts['hosts'][host_ip]))
 
 def all_host_configs():
     configs = {'hosts':{}}

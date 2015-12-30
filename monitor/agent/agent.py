@@ -43,9 +43,9 @@ class MonitorClient(object):
         self.report_service_data = {}
 
         if self.get_configs():
-            a = time.time()
             #print 'going to monitor services--',self.configs
             while True:
+                after = time.time()
                 for service_name,val in self.configs['services'].items():
 
                     interval,plugin_name,last_check_time = val
@@ -63,6 +63,7 @@ class MonitorClient(object):
                         print '\033[32;1m%s \033[0m will be run in next \033[32;1m %s \033[0m seconds' %(service_name,next_run_time)
 
                 time.sleep(5)
+
                 if self.report_service_data:
 
                     # print {'report_service_data::%s' %time.strftime('%Y%m%d%H%M') : self.report_service_data.values()}
@@ -82,12 +83,6 @@ class MonitorClient(object):
         print 'going to run service: %s %s ' %(service_name,plugin_name)
         func = getattr(plugin_api,plugin_name)
         result = func()
-
-        # msg = self.format_msg('report_service_data',
-        #                       {'ip':host_ip,
-        #                        'service_name':service_name,
-        #                         'data':result
-        #                         })
 
         self.report_service_data[service_name]={
                                 'ip':host_ip,

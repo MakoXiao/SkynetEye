@@ -23,14 +23,19 @@ class skynet(object):
         self.hosts = serializer.all_host_configs()
 
     def handle(self,msg):
-        #print 'recv:',msg
-        action_process.action_process(self,msg)
+        # print 'recv:',msg
+        # print '>> process data:: %s' % pickle.loads(msg)
+        data = pickle.loads(msg)
+        for k,msg in data.items():
+            fun_name = k.split('::')[0]
+            time = k.split('::')[1]
+            action_process.action_process(self,fun_name,time,msg)
         print '---------waiting for new msg ---------'
 
-        #received data
+        # received data
         for host,val in self.hosts['hosts'].items():
-            if len(val.keys()) >= 6:
-                print host,val
+            print host,val
+
 
     def forward(self,msg):
         print '-------starting Processing data---------'
