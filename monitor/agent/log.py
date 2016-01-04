@@ -20,17 +20,20 @@ class skynetLog(logging.getLoggerClass()):
     def __init__(self,clevel = logging.DEBUG,Flevel = logging.DEBUG):
         self.path = '../../log/skynet_agent-%s.log' %(time.strftime('%Y%m%d'))
         self.logger = logging.getLogger(self.path)
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
 
-        fmt = logging.Formatter('[%(asctime)s] [%(levelname)s] %(threadName)s [%(module)s:%(funcName)s] - %(message)s', '%Y-%m-%d %H:%M:%S')
-        sh = logging.StreamHandler()
-        sh.setFormatter(fmt)
-        sh.setLevel(clevel)
-        fh = logging.FileHandler(self.path)
-        fh.setFormatter(fmt)
-        fh.setLevel(Flevel)
-        self.logger.addHandler(sh)
+        fh = logging.FileHandler('monitor.log')
+        fh.setLevel(logging.INFO)
+
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.INFO)
+
+        formatter = logging.Formatter('[%(asctime)s] [%(levelname)s] %(threadName)s [%(module)s:%(funcName)s] - %(message)s', '%Y-%m-%d %H:%M:%S')
+        fh.setFormatter(formatter)
+        ch.setFormatter(formatter)
+
         self.logger.addHandler(fh)
+        self.logger.addHandler(ch)
 
     def debug(self,message):
         self.logger.debug(message)
@@ -46,6 +49,9 @@ class skynetLog(logging.getLoggerClass()):
 
     def critical(self,message):
         self.logger.critical(message)
+
+
+
 
 if __name__ == "__main__":
     log = skynetLog(logging.INFO,logging.DEBUG)

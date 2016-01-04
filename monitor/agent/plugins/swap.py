@@ -15,14 +15,24 @@ __author__ = 'whoami'
 import psutil
 
 def monitor(frist_invoke=1):
+    mem = {}
+    f = open("/proc/meminfo")
+    lines = f.readlines()
+    f.close()
+    for line in lines:
+        if len(line) < 2: continue
+        name = line.split(':')[0]
+        var = line.split(':')[1].split()[0]
+        mem[name] = float(var) / (1024.0)
 
-    swap = psutil.swap_memory()
+    swap_used = mem['SwapTotal']-mem['SwapFree']-mem['SwapCached']
 
     value_dic = {
-        'swap.total': int(swap.total/(1024*1024)),
-        'swap.free': int(swap.free/(1024*1024)),
-        'swap.used': int(swap.used/(1024*1024)),
-        'swap.percent':swap.percent,
+        'system.swap.total':round(mem['SwapTotal'],2),
+        'system.swap.cached':round(mem['SwapCached'],2),
+        'system.swap.free':round(mem['SwapFree'],2),
+        'system.swap.used':swap_used,
+        'system.swap.percent':round(swap_used/mem['SwapTotal'],2)
     }
 
     return value_dic

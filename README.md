@@ -270,6 +270,14 @@ whoami@ubuntu:~$ sudo pip install psutil
 
 ```
 
+# pip install rrdtool
+```
+sudo apt-get install libpango1.0-dev libxml2-dev
+sudo apt-get install libwrap*
+sudo pip install python-rrdtool
+sudo apt-get install libxtst-dev
+```
+
 # ionicons css
 ```
   http://ionicons.com/

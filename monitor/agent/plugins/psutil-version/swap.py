@@ -9,23 +9,23 @@ __author__ = 'whoami'
 @contact: skutil@gmail.com
 @site: http://www.itweet.cn
 @software: PyCharm Community Edition
-@file: loadavg.py
-@time: 2015-11-28 下午1:51
+@file: swap.py
+@time: 2015-12-03 下午3:16
 """
-import os
+import psutil
 
 def monitor(frist_invoke=1):
-    f = open('/proc/loadavg')
-    load = f.read().split()
-    f.close()
+
+    swap = psutil.swap_memory()
 
     value_dic = {
-        'system.load.1min':load[0],
-        'system.load.5min':load[1],
-        'system.load.15min':load[2],
+        'system.swap.total': int(swap.total/(1024*1024)),
+        'system.swap.free': int(swap.free/(1024*1024)),
+        'system.swap.used': int(swap.used/(1024*1024)),
+        'system.swap.percent':swap.percent,
     }
 
     return value_dic
 
 if __name__ == '__main__':
-   print monitor()
+    print monitor()

@@ -36,7 +36,6 @@ class skynet(object):
         for host,val in self.hosts['hosts'].items():
             print host,val
 
-
     def forward(self,msg):
         print '-------starting Processing data---------'
         self.handle(msg)
