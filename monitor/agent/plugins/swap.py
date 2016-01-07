@@ -12,7 +12,6 @@ __author__ = 'whoami'
 @file: swap.py
 @time: 2015-12-03 下午3:16
 """
-import psutil
 
 def monitor(frist_invoke=1):
     mem = {}

@@ -34,6 +34,7 @@ class skynet(object):
 
         # received data
         for host,val in self.hosts['hosts'].items():
+
             print host,val
 
     def forward(self,msg):

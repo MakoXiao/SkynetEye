@@ -12,7 +12,6 @@ __author__ = 'whoami'
 @file: loadavg.py
 @time: 2015-11-28 下午1:51
 """
-import os
 
 def monitor(frist_invoke=1):
     f = open('/proc/loadavg')

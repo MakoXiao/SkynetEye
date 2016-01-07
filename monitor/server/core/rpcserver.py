@@ -16,7 +16,6 @@ __author__ = 'whoami'
 import msgpackrpc
 import serializer
 from skynet import skynet
-import pickle
 
 class RpcServer(object):
     def __init__(self):

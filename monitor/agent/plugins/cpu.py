@@ -14,7 +14,6 @@ __author__ = 'whoami'
 """
 import time
 
-
 def round_percentage(number,ndigits):
     return round(number*100,2)
 
