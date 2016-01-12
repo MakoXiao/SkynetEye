@@ -53,11 +53,11 @@ def monitor(frist_invoke=2):
 
         if i.strip()!='lo':
             value_dic['face'][i] = {
-                'system.network.nic':i,
-                'system.network.bytes_recv':rx_bytes_ps/(1024*1024),
-                'system.network.bytes_sent':tx_bytes_ps/(1024*1024),
-                'system.network.packets_recv':rx_pps,
-                'system.network.packets_sent':tx_pps,
+                'network_nic':i,
+                'network_bytes_recv':rx_bytes_ps/(1024*1024),
+                'network_bytes_sent':tx_bytes_ps/(1024*1024),
+                'network_packet_recv':rx_pps,
+                'network_packet_sent':tx_pps,
             }
 
     return value_dic

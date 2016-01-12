@@ -28,12 +28,12 @@ def monitor(frist_invoke=1):
     mem['MemUsed'] = mem['MemTotal'] - mem['MemFree'] - mem['Buffers'] - mem['Cached']
 
     value_dic = {
-        'system.mem.total':round(mem['MemTotal'],2),
-        'system.mem.free':round(mem['MemFree'],2),
-        'system.mem.buffers':round(mem['Buffers'],2),
-        'system.mem.cache':round(mem['Cached'],2),
-        'system.mem.used':round((mem['MemTotal'] - mem['MemFree']),2),
-        'system.mem.percent': round((mem['MemUsed'])/(mem['MemTotal']),2)*100
+        'mem_total':round(mem['MemTotal'],2),
+        'mem_free':round(mem['MemFree'],2),
+        'mem_buffers':round(mem['Buffers'],2),
+        'mem_cache':round(mem['Cached'],2),
+        'mem_used':round((mem['MemTotal'] - mem['MemFree']),2),
+        'mem_percent': round((mem['MemUsed'])/(mem['MemTotal']),2)*100
     }
 
     return value_dic

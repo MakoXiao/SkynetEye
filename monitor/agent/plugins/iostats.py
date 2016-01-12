@@ -58,11 +58,11 @@ def monitor(frist_invoke=2):
         util += round(ds.get(i)[4],2)
 
     value_dic = {
-        'system.disks.io_read':blm_read,
-        'system.disks.io_write':blm_wrtn,
-        'system.disks.io_read_num': rnum,
-        'system.disks.io_write_num': wnum,
-        'system.disks.io.util': util
+        'disks_io_read':blm_read,
+        'disks_io_write':blm_wrtn,
+        'disks_io_read_num': rnum,
+        'disks_io_write_num': wnum,
+        'disks_io_util': util
     }
 
     return value_dic

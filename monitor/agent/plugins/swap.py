@@ -27,11 +27,11 @@ def monitor(frist_invoke=1):
     swap_used = mem['SwapTotal']-mem['SwapFree']-mem['SwapCached']
 
     value_dic = {
-        'system.swap.total':round(mem['SwapTotal'],2),
-        'system.swap.cached':round(mem['SwapCached'],2),
-        'system.swap.free':round(mem['SwapFree'],2),
-        'system.swap.used':swap_used,
-        'system.swap.percent':round(swap_used/mem['SwapTotal'],2)
+        'swap_total':round(mem['SwapTotal'],2),
+        'swap_cached':round(mem['SwapCached'],2),
+        'swap_free':round(mem['SwapFree'],2),
+        'swap_used':swap_used,
+        'swap_percent':round(swap_used/mem['SwapTotal'],2)
     }
 
     return value_dic

@@ -55,16 +55,16 @@ def monitor(frist_invoke=2):
         cpu_guest_tmp = (int(cpu_t1[9])+int(cpu_t2[9]))/2
 
         value_dic = {
-            'system.cpu.user': round_percentage(cpu_user_tmp/cpu_total_tmp,2),
-            'system.cpu.nice': round_percentage(cpu_nice_tmp/cpu_total_tmp,2),
-            'system.cpu.system': round_percentage(cpu_system_tmp/cpu_total_tmp,2),
-            'system.cpu.idle': round_percentage(cpu_idle_tmp/cpu_total_tmp,2),
-            'system.cpu.iowait': round_percentage(cpu_iowait_tmp/cpu_total_tmp,2),
-            'system.cpu.irq': round_percentage(cpu_irq_tmp/cpu_total_tmp,2),
-            'system.cpu.softirq': round_percentage(cpu_softirq_tmp/cpu_total_tmp,2),
-            'system.cpu.steal': round_percentage(cpu_steal_tmp/cpu_total_tmp,2),
-            'system.cpu.guest': round_percentage(cpu_guest_tmp/cpu_total_tmp,2),
-            'system.cpu.percent': round_percentage(cpu_percent,2),
+            'cpu_user': round_percentage(cpu_user_tmp/cpu_total_tmp,2),
+            'cpu_nice': round_percentage(cpu_nice_tmp/cpu_total_tmp,2),
+            'cpu_system': round_percentage(cpu_system_tmp/cpu_total_tmp,2),
+            'cpu_idle': round_percentage(cpu_idle_tmp/cpu_total_tmp,2),
+            'cpu_iowait': round_percentage(cpu_iowait_tmp/cpu_total_tmp,2),
+            'cpu_irq': round_percentage(cpu_irq_tmp/cpu_total_tmp,2),
+            'cpu_softirq': round_percentage(cpu_softirq_tmp/cpu_total_tmp,2),
+            'cpu_steal': round_percentage(cpu_steal_tmp/cpu_total_tmp,2),
+            'cpu_guest': round_percentage(cpu_guest_tmp/cpu_total_tmp,2),
+            'cpu_percent': round_percentage(cpu_percent,2),
         }
 
         return value_dic

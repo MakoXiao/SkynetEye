@@ -34,12 +34,12 @@ def monitor(frist_invoke=1):
             free = float(disk.f_bsize * disk.f_bavail/(1024*1024))
 
             value_dic['mount'][mount_dir] = {
-                'system.disk.device':mount_dir,
-                'system.disk.total':total,
-                'system.disk.used':used,
-                'system.disk.free':free,
-                'system.disk.percent': round((float(used/total)*100),2),
-                'system.disk.type':type,
+                'disk_device':mount_dir,
+                'disk_total':total,
+                'disk_used':used,
+                'disk_free':free,
+                'disk_percent': round((float(used/total)*100),2),
+                'disk_type':type,
             }
     return value_dic
 
